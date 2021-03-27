@@ -12,21 +12,18 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
 import android.os.Build
 import android.util.Xml
 import android.view.LayoutInflater
 import androidx.annotation.AttrRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.createBitmap
+import com.apandroid.colorwheel.ColorWheel
 
-/**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- */
 class FullscreenActivity : AppCompatActivity() {
     private lateinit var fullscreenContent: TextView
     private lateinit var fullscreenContentControls: LinearLayout
-
 
     private val hideHandler = Handler()
 
@@ -50,8 +47,8 @@ class FullscreenActivity : AppCompatActivity() {
         supportActionBar?.show()
         fullscreenContentControls.visibility = View.VISIBLE
     }
-    private var isFullscreen: Boolean = false
 
+    private var isFullscreen: Boolean = false
     private val hideRunnable = Runnable { hide() }
 
     /**
@@ -80,6 +77,10 @@ class FullscreenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_fullscreen)
         super.onCreate(savedInstanceState)
         isFullscreen = true
+
+        // Set listener for whenever the color in the wheel is changed
+        val colorWheel = findViewById<ColorWheel>(R.id.colorWheel)
+        colorWheel.colorChangeListener = { rgb: Int -> setColor(rgb) }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -130,6 +131,13 @@ class FullscreenActivity : AppCompatActivity() {
     }
 
     companion object {
+        var pencilColor : Int     = Color.BLACK
+        var pencilThickness : Int = 5
+
+        public fun getColor () : Int     { return pencilColor }
+        public fun setColor (color: Int) { pencilColor = color }
+
+
         /**
          * Whether or not the system UI should be auto-hidden after
          * [AUTO_HIDE_DELAY_MILLIS] milliseconds.

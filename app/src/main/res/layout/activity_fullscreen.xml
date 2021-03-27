@@ -27,8 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        xmlns:custom="com.example.paintbyday.MyCanvasView"
-        >
+        xmlns:custom="com.example.paintbyday.MyCanvasView" >
 
         <com.apandroid.colorwheel.ColorWheel
             android:id="@+id/colorWheel"

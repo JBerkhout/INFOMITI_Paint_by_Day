@@ -75,6 +75,9 @@ class MyCanvasView(context: Context, attrs: AttributeSet) : View(context, attrs)
     }
 
     private fun touchStart(){
+        // Retrieve the current color before we start drawing
+        paint.color = FullscreenActivity.getColor()
+
         // Clear old path
         path.reset()
         // Set path to new touch coordinates
