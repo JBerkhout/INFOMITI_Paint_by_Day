@@ -20,6 +20,7 @@ import androidx.annotation.AttrRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.createBitmap
 import com.apandroid.colorwheel.ColorWheel
+import com.apandroid.colorwheel.gradientseekbar.GradientSeekBar
 
 class FullscreenActivity : AppCompatActivity() {
     private lateinit var fullscreenContent: TextView
@@ -78,9 +79,19 @@ class FullscreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         isFullscreen = true
 
-        // Set listener for whenever the color in the wheel is changed
+        // Set listener for whenever the color is changed in the UI
         val colorWheel = findViewById<ColorWheel>(R.id.colorWheel)
-        colorWheel.colorChangeListener = { rgb: Int -> setColor(rgb) }
+        val gradientSeekBar = findViewById<GradientSeekBar>(R.id.gradientSeekBar)
+        gradientSeekBar.startColor = Color.BLACK
+
+        colorWheel.colorChangeListener = { rgb: Int ->
+            setColor(rgb)
+            gradientSeekBar.endColor = rgb
+        }
+
+        gradientSeekBar.colorChangeListener = { offset: Float, argb: Int ->
+            setColor(argb)
+        }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
