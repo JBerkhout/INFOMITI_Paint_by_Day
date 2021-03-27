@@ -1,10 +1,7 @@
 package com.example.paintbyday
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Path
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -16,6 +13,7 @@ private const val STROKE_WIDTH = 12f
 class MyCanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private lateinit var extraCanvas: Canvas
     private lateinit var extraBitmap: Bitmap
+    private lateinit var scaledOverlay : Bitmap
     private val backgroundColor = ResourcesCompat.getColor(resources, R.color.white, null)
     private val drawColor = ResourcesCompat.getColor(resources, R.color.purple_500, null)
     private var path = Path()
@@ -23,6 +21,8 @@ class MyCanvasView(context: Context, attrs: AttributeSet) : View(context, attrs)
     private var motionTouchEventY = 0f
     private var touchTolerance = ViewConfiguration.get(context).scaledTouchSlop
 
+    private var overlay: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.overlay)
+    
     private var mShowText: Boolean
     private var textPos: Int
 
@@ -43,11 +43,7 @@ class MyCanvasView(context: Context, attrs: AttributeSet) : View(context, attrs)
                 recycle()
             }
         }
-
     }
-//    constructor(myCanvasView: MyCanvasView) : this(context) {
-//    }
-
 
     // Define painting parameters
     // See https://developer.android.com/reference/kotlin/android/graphics/Paint
@@ -101,7 +97,6 @@ class MyCanvasView(context: Context, attrs: AttributeSet) : View(context, attrs)
         }
         // Invalidate forces a redraw of the screen with the new path
         invalidate()
-
     }
 
     private fun touchUp(){
@@ -119,11 +114,14 @@ class MyCanvasView(context: Context, attrs: AttributeSet) : View(context, attrs)
         extraBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         extraCanvas = Canvas(extraBitmap)
         extraCanvas.drawColor(backgroundColor)
+
+        scaledOverlay = Bitmap.createScaledBitmap(overlay, extraCanvas.width, extraCanvas.height, false)
     }
 
     override fun onDraw(canvas: Canvas){
         // Draw the initial canvas
         super.onDraw(canvas)
         canvas.drawBitmap(extraBitmap, 0f, 0f, null)
+        canvas.drawBitmap(scaledOverlay, 0f, 0f, null)
     }
 }
