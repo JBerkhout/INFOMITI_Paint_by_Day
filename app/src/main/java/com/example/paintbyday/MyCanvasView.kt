@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
@@ -12,7 +13,7 @@ import androidx.core.content.res.ResourcesCompat
 
 private const val STROKE_WIDTH = 12f
 
-class MyCanvasView(context: Context) : View(context) {
+class MyCanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private lateinit var extraCanvas: Canvas
     private lateinit var extraBitmap: Bitmap
     private val backgroundColor = ResourcesCompat.getColor(resources, R.color.white, null)
@@ -22,10 +23,30 @@ class MyCanvasView(context: Context) : View(context) {
     private var motionTouchEventY = 0f
     private var touchTolerance = ViewConfiguration.get(context).scaledTouchSlop
 
+    private var mShowText: Boolean
+    private var textPos: Int
+
     // Cached touch location
     private var currentX = 0f
     private var currentY = 0f
 
+    init{
+        context.theme.obtainStyledAttributes(
+                attrs,
+                R.styleable.MyCanvasView,
+                0, 0).apply {
+
+            try {
+                mShowText = getBoolean(R.styleable.MyCanvasView_showText, false)
+                textPos = getInteger(R.styleable.MyCanvasView_labelPosition, 0)
+            } finally {
+                recycle()
+            }
+        }
+
+    }
+//    constructor(myCanvasView: MyCanvasView) : this(context) {
+//    }
 
 
     // Define painting parameters
@@ -48,7 +69,7 @@ class MyCanvasView(context: Context) : View(context) {
         when (event.action){
             MotionEvent.ACTION_DOWN -> touchStart()
             MotionEvent.ACTION_MOVE -> touchMove()
-            MotionEvent.ACTION_UP   -> touchUp()
+            MotionEvent.ACTION_UP -> touchUp()
         }
         return true
     }

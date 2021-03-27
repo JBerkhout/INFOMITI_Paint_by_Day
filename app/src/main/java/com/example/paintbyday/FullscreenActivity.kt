@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
+import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
@@ -12,6 +13,9 @@ import android.widget.TextView
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.Build
+import android.util.Xml
+import android.view.LayoutInflater
+import androidx.annotation.AttrRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.createBitmap
 
@@ -69,45 +73,17 @@ class FullscreenActivity : AppCompatActivity() {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
-        val myCanvasView = MyCanvasView(this)
-
-        myCanvasView.contentDescription = getString(R.string.canvasContentDescription)
-        setContentView(myCanvasView)
-
-
+        //val myCanvasView = MyCanvasView(this, resources.getXml(R.styleable.MyCanvasView))
+        //myCanvasView.contentDescription = getString(R.string.canvasContentDescription)
+        //setContentView(findViewById<com.example.paintbyday.MyCanvasView>(R.id.myView))
+        //setContentView(myCanvasView)
+        setContentView(R.layout.activity_fullscreen)
         super.onCreate(savedInstanceState)
-        // myCanvasView.systemUiVisibility = SYSTEM_UI_FLAG_FULLSCREEN
-        // setContentView(R.layout.activity_fullscreen)
-        // supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-//            window.setDecorFitsSystemWindows(false)
-//        } else {
-//            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
-//        }
-
-
         isFullscreen = true
-
-        // Set up the user interaction to manually show or hide the system UI.
-        // fullscreenContent = findViewById(R.id.fullscreen_content)
-        // fullscreenContent.setOnClickListener { toggle() }
-
-        // fullscreenContentControls = findViewById(R.id.fullscreen_content_controls)
-
-        // Upon interacting with UI controls, delay any scheduled hide()
-        // operations to prevent the jarring behavior of controls going away
-        // while interacting with the UI.
-        // findViewById<Button>(R.id.dummy_button).setOnTouchListener(delayHideTouchListener)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
-
-        // Trigger the initial hide() shortly after the activity has been
-        // created, to briefly hint to the user that UI controls
-        // are available.
-        // delayedHide(100)
     }
 
     private fun toggle() {
