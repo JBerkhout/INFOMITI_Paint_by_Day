@@ -7,6 +7,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
 import androidx.core.content.res.ResourcesCompat
+import kotlin.math.abs
 
 private const val STROKE_WIDTH = 12f
 
@@ -20,9 +21,23 @@ class MyCanvasView(context: Context, attrs: AttributeSet) : View(context, attrs)
     private var motionTouchEventX = 0f
     private var motionTouchEventY = 0f
     private var touchTolerance = ViewConfiguration.get(context).scaledTouchSlop
+    private var sectionIndex = 0
 
-    private var overlay: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.overlay)
-    
+    private var overlayArray = arrayOf(BitmapFactory.decodeResource(resources, R.drawable.section1overlay),
+                                       BitmapFactory.decodeResource(resources, R.drawable.section2overlay),
+                                       BitmapFactory.decodeResource(resources, R.drawable.section3overlay),
+                                       BitmapFactory.decodeResource(resources, R.drawable.section4overlay),
+                                       BitmapFactory.decodeResource(resources, R.drawable.section5overlay),
+                                       BitmapFactory.decodeResource(resources, R.drawable.section6overlay)
+    )
+    private var backgroundArray = arrayOf(BitmapFactory.decodeResource(resources, R.drawable.section1background),
+                                          BitmapFactory.decodeResource(resources, R.drawable.section2background),
+                                          BitmapFactory.decodeResource(resources, R.drawable.section3background),
+                                          BitmapFactory.decodeResource(resources, R.drawable.section4background),
+                                          BitmapFactory.decodeResource(resources, R.drawable.section5background),
+                                          BitmapFactory.decodeResource(resources, R.drawable.section6background)
+    )
+
     private var mShowText: Boolean
     private var textPos: Int
 
@@ -70,6 +85,12 @@ class MyCanvasView(context: Context, attrs: AttributeSet) : View(context, attrs)
         return true
     }
 
+    // MARKED FOR DELETE
+    public fun drawNewSection(canvas: Canvas){
+        canvas.drawBitmap(backgroundArray[sectionIndex], 0f, 0f, null)
+        canvas.drawBitmap(overlayArray[sectionIndex], 0f, 0f, null)
+    }
+
     private fun touchStart(){
         // Retrieve the current color before we start drawing
         paint.color = FullscreenActivity.getColor()
@@ -84,8 +105,8 @@ class MyCanvasView(context: Context, attrs: AttributeSet) : View(context, attrs)
     }
 
     private fun touchMove(){
-        val dx = Math.abs(motionTouchEventX - currentX)
-        val dy = Math.abs(motionTouchEventY - currentY)
+        val dx = abs(motionTouchEventX - currentX)
+        val dy = abs(motionTouchEventY - currentY)
         if (dx >= touchTolerance || dy >= touchTolerance) {
             // QuadTo() adds a quadratic bezier from the last point,
             // approaching control point (x1,y1), and ending at (x2,y2)
@@ -113,15 +134,42 @@ class MyCanvasView(context: Context, attrs: AttributeSet) : View(context, attrs)
         // Create bitmap of the new correct size, and convert it to canvas, fill it with background color
         extraBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         extraCanvas = Canvas(extraBitmap)
-        extraCanvas.drawColor(backgroundColor)
+        //extraCanvas.drawColor(backgroundColor)
 
-        scaledOverlay = Bitmap.createScaledBitmap(overlay, extraCanvas.width, extraCanvas.height, false)
+        // Scale overlays and backgrounds because for loops are stupid in kotlin
+        overlayArray[0] = Bitmap.createScaledBitmap(overlayArray[0], extraCanvas.width, extraCanvas.height, false)
+        overlayArray[1] = Bitmap.createScaledBitmap(overlayArray[1], extraCanvas.width, extraCanvas.height, false)
+        overlayArray[2] = Bitmap.createScaledBitmap(overlayArray[2], extraCanvas.width, extraCanvas.height, false)
+        overlayArray[3] = Bitmap.createScaledBitmap(overlayArray[3], extraCanvas.width, extraCanvas.height, false)
+        overlayArray[4] = Bitmap.createScaledBitmap(overlayArray[4], extraCanvas.width, extraCanvas.height, false)
+        overlayArray[5] = Bitmap.createScaledBitmap(overlayArray[5], extraCanvas.width, extraCanvas.height, false)
+
+        backgroundArray[0] = Bitmap.createScaledBitmap(backgroundArray[0], extraCanvas.width, extraCanvas.height, false)
+        backgroundArray[1] = Bitmap.createScaledBitmap(backgroundArray[1], extraCanvas.width, extraCanvas.height, false)
+        backgroundArray[2] = Bitmap.createScaledBitmap(backgroundArray[2], extraCanvas.width, extraCanvas.height, false)
+        backgroundArray[3] = Bitmap.createScaledBitmap(backgroundArray[3], extraCanvas.width, extraCanvas.height, false)
+        backgroundArray[4] = Bitmap.createScaledBitmap(backgroundArray[4], extraCanvas.width, extraCanvas.height, false)
+        backgroundArray[5] = Bitmap.createScaledBitmap(backgroundArray[5], extraCanvas.width, extraCanvas.height, false)
+
+        //scaledOverlay = Bitmap.createScaledBitmap(overlayArray[0], extraCanvas.width, extraCanvas.height, false)
     }
 
     override fun onDraw(canvas: Canvas){
+        var index1 = 0
+        while(index1 <= FullscreenActivity.getIndex()){
+            canvas.drawBitmap(backgroundArray[index1], 0f, 0f, null)
+            //canvas.drawBitmap(overlayArray[index1], 0f, 0f, null)
+            index1 += 1
+        }
         // Draw the initial canvas
         super.onDraw(canvas)
         canvas.drawBitmap(extraBitmap, 0f, 0f, null)
-        canvas.drawBitmap(scaledOverlay, 0f, 0f, null)
+
+        var index2 = 0
+        while(index2 <= FullscreenActivity.getIndex()){
+            //canvas.drawBitmap(backgroundArray[index], 0f, 0f, null)
+            canvas.drawBitmap(overlayArray[index2], 0f, 0f, null)
+            index2 += 1
+        }
     }
 }

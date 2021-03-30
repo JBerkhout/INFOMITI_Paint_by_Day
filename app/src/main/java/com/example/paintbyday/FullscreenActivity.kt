@@ -92,6 +92,12 @@ class FullscreenActivity : AppCompatActivity() {
         gradientSeekBar.colorChangeListener = { offset: Float, argb: Int ->
             setColor(argb)
         }
+
+        // Set listener to increase section index by one
+        val nextSectionButton = findViewById<Button>(R.id.button_nextPiece)
+        nextSectionButton.setOnClickListener(){
+            if(getIndex() < 5){setIndex(getIndex()+1)}
+        }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -144,9 +150,13 @@ class FullscreenActivity : AppCompatActivity() {
     companion object {
         var pencilColor : Int     = Color.BLACK
         var pencilThickness : Int = 5
+        var sectionIndex : Int = 0
 
         public fun getColor () : Int     { return pencilColor }
         public fun setColor (color: Int) { pencilColor = color }
+
+        public fun getIndex () : Int     { return sectionIndex }
+        public fun setIndex (index: Int) { sectionIndex = index }
 
 
         /**
