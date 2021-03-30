@@ -155,16 +155,19 @@ class MyCanvasView(context: Context, attrs: AttributeSet) : View(context, attrs)
     }
 
     override fun onDraw(canvas: Canvas){
+        // Draw all pieces of the appropriate background
         var index1 = 0
         while(index1 <= FullscreenActivity.getIndex()){
+            canvas.drawColor(backgroundColor)
             canvas.drawBitmap(backgroundArray[index1], 0f, 0f, null)
-            //canvas.drawBitmap(overlayArray[index1], 0f, 0f, null)
             index1 += 1
         }
-        // Draw the initial canvas
+
+        // Draw the user's drawing
         super.onDraw(canvas)
         canvas.drawBitmap(extraBitmap, 0f, 0f, null)
 
+        // Finally, draw all pieces of the appropriate overlay
         var index2 = 0
         while(index2 <= FullscreenActivity.getIndex()){
             //canvas.drawBitmap(backgroundArray[index], 0f, 0f, null)
