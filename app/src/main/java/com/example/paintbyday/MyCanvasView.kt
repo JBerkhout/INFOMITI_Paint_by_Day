@@ -142,7 +142,7 @@ class MyCanvasView(context: Context, attrs: AttributeSet) : View(context, attrs)
             Bitmap.createScaledBitmap(arr, extraCanvas.width, extraCanvas.height, false)
         }.toTypedArray()
 
-        backgroundArray = overlayArray.map{ arr ->
+        backgroundArray = backgroundArray.map{ arr ->
             Bitmap.createScaledBitmap(arr, extraCanvas.width, extraCanvas.height, false)
         }.toTypedArray()
     }

@@ -82,6 +82,7 @@ class FullscreenActivity : AppCompatActivity() {
 
         val widthSeekBar = findViewById<SeekBar>(R.id.widthSeekBar)
         val width = findViewById<TextView>(R.id.width)
+        val myCanvasView = findViewById<MyCanvasView>(R.id.myCanvasView)
 
         widthSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -118,6 +119,7 @@ class FullscreenActivity : AppCompatActivity() {
         val nextSectionButton = findViewById<Button>(R.id.button_nextPiece)
         nextSectionButton.setOnClickListener(){
             if(getIndex() < 5){setIndex(getIndex()+1)}
+            myCanvasView.invalidate()
         }
     }
 
