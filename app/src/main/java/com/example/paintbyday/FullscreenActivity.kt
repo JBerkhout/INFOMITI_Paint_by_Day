@@ -22,7 +22,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.createBitmap
 import com.apandroid.colorwheel.ColorWheel
 import com.apandroid.colorwheel.gradientseekbar.GradientSeekBar
-
+// comment!!
 class FullscreenActivity : AppCompatActivity() {
     private lateinit var fullscreenContent: TextView
     private lateinit var fullscreenContentControls: LinearLayout
