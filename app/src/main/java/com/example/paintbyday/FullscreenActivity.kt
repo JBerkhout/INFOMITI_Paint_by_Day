@@ -16,6 +16,7 @@ import android.graphics.Color
 import android.os.Build
 import android.util.Xml
 import android.view.LayoutInflater
+import android.widget.SeekBar
 import androidx.annotation.AttrRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.createBitmap
@@ -78,6 +79,26 @@ class FullscreenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_fullscreen)
         super.onCreate(savedInstanceState)
         isFullscreen = true
+
+        val widthSeekBar = findViewById<SeekBar>(R.id.widthSeekBar)
+        val width = findViewById<TextView>(R.id.width)
+
+        widthSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                //println(progress.toString())
+                width.text = progress.toString()
+                //widthSeekBar.setProgress(progress)
+                //textViewID.setText("" + progress)
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
+            }
+        })
 
         // Set listener for whenever the color is changed in the UI
         val colorWheel = findViewById<ColorWheel>(R.id.colorWheel)
