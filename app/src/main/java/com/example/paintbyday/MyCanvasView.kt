@@ -137,21 +137,14 @@ class MyCanvasView(context: Context, attrs: AttributeSet) : View(context, attrs)
         //extraCanvas.drawColor(backgroundColor)
 
         // Scale overlays and backgrounds because for loops are stupid in kotlin
-        overlayArray[0] = Bitmap.createScaledBitmap(overlayArray[0], extraCanvas.width, extraCanvas.height, false)
-        overlayArray[1] = Bitmap.createScaledBitmap(overlayArray[1], extraCanvas.width, extraCanvas.height, false)
-        overlayArray[2] = Bitmap.createScaledBitmap(overlayArray[2], extraCanvas.width, extraCanvas.height, false)
-        overlayArray[3] = Bitmap.createScaledBitmap(overlayArray[3], extraCanvas.width, extraCanvas.height, false)
-        overlayArray[4] = Bitmap.createScaledBitmap(overlayArray[4], extraCanvas.width, extraCanvas.height, false)
-        overlayArray[5] = Bitmap.createScaledBitmap(overlayArray[5], extraCanvas.width, extraCanvas.height, false)
 
-        backgroundArray[0] = Bitmap.createScaledBitmap(backgroundArray[0], extraCanvas.width, extraCanvas.height, false)
-        backgroundArray[1] = Bitmap.createScaledBitmap(backgroundArray[1], extraCanvas.width, extraCanvas.height, false)
-        backgroundArray[2] = Bitmap.createScaledBitmap(backgroundArray[2], extraCanvas.width, extraCanvas.height, false)
-        backgroundArray[3] = Bitmap.createScaledBitmap(backgroundArray[3], extraCanvas.width, extraCanvas.height, false)
-        backgroundArray[4] = Bitmap.createScaledBitmap(backgroundArray[4], extraCanvas.width, extraCanvas.height, false)
-        backgroundArray[5] = Bitmap.createScaledBitmap(backgroundArray[5], extraCanvas.width, extraCanvas.height, false)
+        overlayArray = overlayArray.map{ arr ->
+            Bitmap.createScaledBitmap(arr, extraCanvas.width, extraCanvas.height, false)
+        }.toTypedArray()
 
-        //scaledOverlay = Bitmap.createScaledBitmap(overlayArray[0], extraCanvas.width, extraCanvas.height, false)
+        backgroundArray = overlayArray.map{ arr ->
+            Bitmap.createScaledBitmap(arr, extraCanvas.width, extraCanvas.height, false)
+        }.toTypedArray()
     }
 
     override fun onDraw(canvas: Canvas){
