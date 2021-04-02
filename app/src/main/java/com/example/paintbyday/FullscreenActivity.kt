@@ -87,7 +87,8 @@ class FullscreenActivity : AppCompatActivity() {
         widthSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 //println(progress.toString())
-                width.text = progress.toString()
+                width.text = "Pencil width: " + progress.toString()
+                setThickness(progress)
                 //widthSeekBar.setProgress(progress)
                 //textViewID.setText("" + progress)
             }
@@ -104,6 +105,11 @@ class FullscreenActivity : AppCompatActivity() {
         // Set listener for whenever the color is changed in the UI
         val colorWheel = findViewById<ColorWheel>(R.id.colorWheel)
         val gradientSeekBar = findViewById<GradientSeekBar>(R.id.gradientSeekBar)
+        val startColor = Color.argb(100, 64, 64, 255)
+        colorWheel.rgb = startColor
+        gradientSeekBar.endColor = colorWheel.rgb
+        setColor(colorWheel.rgb)
+        gradientSeekBar.offset = 100f
         gradientSeekBar.startColor = Color.BLACK
 
         colorWheel.colorChangeListener = { rgb: Int ->
@@ -173,10 +179,14 @@ class FullscreenActivity : AppCompatActivity() {
     companion object {
         var pencilColor : Int     = Color.BLACK
         var pencilThickness : Int = 5
-        var sectionIndex : Int = 0
+        var sectionIndex : Int    = 0
+
 
         public fun getColor () : Int     { return pencilColor }
         public fun setColor (color: Int) { pencilColor = color }
+
+        public fun getThickness () : Int { return pencilThickness }
+        public fun setThickness (thickness: Int) { pencilThickness = thickness }
 
         public fun getIndex () : Int     { return sectionIndex }
         public fun setIndex (index: Int) { sectionIndex = index }

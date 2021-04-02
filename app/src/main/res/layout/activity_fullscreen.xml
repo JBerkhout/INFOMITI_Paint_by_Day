@@ -43,30 +43,35 @@
             <com.apandroid.colorwheel.gradientseekbar.GradientSeekBar
                 android:id="@+id/gradientSeekBar"
                 android:layout_width="40dp"
-                android:layout_height="230dp" />
+                android:layout_height="match_parent" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="12"
-                android:textSize="42sp"
-                android:id="@+id/width"/>
-
-            <SeekBar
-                android:id="@+id/widthSeekBar"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:max="100"
-                android:min="0"
-                android:progress="12"
-                android:rotation="-90" />
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/button_nextPiece"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Next piece" />
+                <Button
+                    android:id="@+id/button_nextPiece"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="Next piece" />
+
+                <TextView
+                    android:id="@+id/width"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pencil width: 12"
+                    android:textSize="42sp" />
+
+                <SeekBar
+                    android:id="@+id/widthSeekBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="100"
+                    android:min="0"
+                    android:progress="12" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <com.example.paintbyday.MyCanvasView
